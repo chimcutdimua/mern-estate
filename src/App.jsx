@@ -1,9 +1,21 @@
+import { Routes, Route } from "react-router-dom"
+import Home from "./pages/Home"
+import About from "./pages/About"
+import SignUp from "./pages/SignUp"
+import LogIn from "./pages/LogIn"
+import LogOut from "./pages/logOut"
+import Profile from "./pages/Profile"
+
 export default function App() {
-  console.log('Hello world!');
 
   return (
-    <h1 className="text-red-600">
-      Hello world!
-    </h1>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/sign-up" element={<SignUp />} />
+      <Route path="/log-in" element={<LogIn />} />
+      <Route path="/log-out" element={<LogOut />} />
+      <Route path="/about" element={<About />} />
+      <Route path="/profile" element={<Profile />} />
+    </Routes>
   )
 }
