@@ -5,17 +5,21 @@ import SignUp from "./pages/SignUp"
 import LogIn from "./pages/LogIn"
 import LogOut from "./pages/logOut"
 import Profile from "./pages/Profile"
+import Header from "./components/Header"
 
 export default function App() {
 
   return (
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/sign-up" element={<SignUp />} />
-      <Route path="/log-in" element={<LogIn />} />
-      <Route path="/log-out" element={<LogOut />} />
-      <Route path="/about" element={<About />} />
-      <Route path="/profile" element={<Profile />} />
-    </Routes>
+    <>
+      <Header />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/sign-up" element={<SignUp />} />
+        <Route path="/log-in" element={<LogIn />} />
+        <Route path="/log-out" element={<LogOut />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/profile" element={<Profile />} />
+      </Routes>
+    </>
   )
 }
