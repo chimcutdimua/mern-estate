@@ -2,7 +2,7 @@ const bcryptjs = require("bcryptjs");
 const User = require("../models/user.model");
 const saltRounds = 10;
 
-const signup = async (req, res) => {
+const signup = async (req, res, next) => {
   const { username, email, password } = req.body;
   if (!username || !email || !password) {
     return res.status(400).json({ message: "All fields are required" });
@@ -24,8 +24,7 @@ const signup = async (req, res) => {
     await newUser.save();
     res.status(201).json({ message: "Signup successful", user: newUser });
   } catch (error) {
-    console.error("Failed to signup:", error);
-    return res.status(500).json({ message: "Server error" });
+    next(error);
   }
 };
 
