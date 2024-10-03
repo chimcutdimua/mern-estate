@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useRef } from 'react'
 import { FaCamera } from 'react-icons/fa'
@@ -14,7 +14,7 @@ const Profile = () => {
     const [formData, setFormData] = useState({})
 
 
-    const handlerUpload = (file) => {
+    const handlerUpload = useCallback((file) => {
         const storage = getStorage(app)
         const fileName = new Date().getTime() + file.name
         const storageRef = ref(storage, fileName)
@@ -24,6 +24,7 @@ const Profile = () => {
             const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
             setFilePerc(Math.round(progress))
         }, (error) => {
+            console.log(error)
             setFileUploadError(true)
         }, () => {
             getDownloadURL(uploadTask.snapshot.ref).then(
@@ -32,7 +33,7 @@ const Profile = () => {
                 }
             )
         });
-    }
+    }, [formData])
 
     useEffect(() => {
         if (file) {
