@@ -3,7 +3,18 @@ import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { FaCamera } from 'react-icons/fa'
 import { useDispatch, useSelector } from 'react-redux'
 import { app } from '../firebase'
-import { deleteUserFailure, deleteUserStart, deleteUserSuccess, signOutUserFailure, signOutUserStart, signOutUserSuccess, updateUserFailure, updateUserStart, updateUserSuccess } from '../redux/user/userSlice'
+import {
+    deleteUserFailure,
+    deleteUserStart,
+    deleteUserSuccess,
+    signOutUserFailure,
+    signOutUserStart,
+    signOutUserSuccess,
+    updateUserFailure,
+    updateUserStart,
+    updateUserSuccess
+} from '../redux/user/userSlice'
+import { Link } from 'react-router-dom'
 
 const Profile = () => {
     const fileRef = useRef(null)
@@ -169,6 +180,9 @@ const Profile = () => {
                 <button disabled={loading} className='rounded-lg p-3 text-white bg-slate-700 uppercase hover:opacity-95 disabled:opacity-80'>
                     {loading ? 'Loading...' : 'Update'}
                 </button>
+                <Link to={'/create-listing'} className='rounded-lg p-3 text-white bg-green-700 uppercase hover:opacity-95 text-center'>
+                    create listing
+                </Link>
             </form>
             <div className='flex justify-between mt-5'>
                 <span onClick={handleDelete} className='text-red-600 cursor-pointer'>Delete Account</span>
