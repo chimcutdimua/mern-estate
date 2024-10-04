@@ -1,11 +1,9 @@
-import React, { useCallback, useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
-import { useRef } from 'react'
-import { FaCamera } from 'react-icons/fa'
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/storage'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
+import { FaCamera } from 'react-icons/fa'
+import { useDispatch, useSelector } from 'react-redux'
 import { app } from '../firebase'
-import { updateUserStart, updateUserSuccess, updateUserFailure, deleteUserFailure, deleteUserStart, deleteUserSuccess } from '../redux/user/userSlice'
-import { useDispatch } from 'react-redux'
+import { deleteUserFailure, deleteUserStart, deleteUserSuccess, signOutUserFailure, signOutUserStart, signOutUserSuccess, updateUserFailure, updateUserStart, updateUserSuccess } from '../redux/user/userSlice'
 
 const Profile = () => {
     const fileRef = useRef(null)
@@ -93,6 +91,21 @@ const Profile = () => {
         }
     }
 
+    const handleSignOut = async () => {
+        try {
+            dispatch(signOutUserStart())
+            const res = await fetch(`/api/auth/signout`)
+            const data = await res.json()
+            if (data.success === false) {
+                dispatch(signOutUserFailure(data.message))
+                return
+            }
+            dispatch(signOutUserSuccess(data))
+        } catch (error) {
+            dispatch(signOutUserFailure(error.message))
+        }
+    }
+
     // fisebase storage
     // allow read;
     // allow write: if
@@ -159,7 +172,7 @@ const Profile = () => {
             </form>
             <div className='flex justify-between mt-5'>
                 <span onClick={handleDelete} className='text-red-600 cursor-pointer'>Delete Account</span>
-                <span className='text-red-600 cursor-pointer'>Sign out</span>
+                <span onClick={handleSignOut} className='text-red-600 cursor-pointer'>Sign out</span>
             </div>
             <p className='text-red-600 mt-5 text-center'>{error ? error : ""}</p>
             <p className='text-green-600 mt-5 text-center'>{updatedSuccess ? "User is updated successfully!" : ""}</p>
