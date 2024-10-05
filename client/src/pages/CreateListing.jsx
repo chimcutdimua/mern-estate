@@ -182,7 +182,6 @@ const CreateListing = () => {
                             multiple
                         />
                         <button
-                            loading={uploading}
                             onClick={handleImageSubmit}
                             type='button'
                             className='p-3 border text-green-700 border-green-700 rounded uppercase hover:shadow-lg disabled:opacity-80'>
