@@ -26,7 +26,7 @@ const CreateListing = () => {
     const [loading, setLoading] = useState(false)
     const [imageUploadError, setImageUploadError] = useState(false)
     const [uploading, setUploading] = useState(false)
-    const handleImageSubmit = (e) => {
+    const handleImageSubmit = () => {
         if (files.length > 0 && files.length + formData.imageUrls.length <= 7) {
             setUploading(true)
             setImageUploadError(false)
@@ -41,7 +41,7 @@ const CreateListing = () => {
                 })
                 setImageUploadError(false)
                 setUploading(false)
-            }).catch((error) => {
+            }).catch(() => {
                 setImageUploadError('Image upload failed')
                 setUploading(false)
 
