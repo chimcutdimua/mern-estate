@@ -15,6 +15,7 @@ import {
     updateUserSuccess
 } from '../redux/user/userSlice'
 import { Link } from 'react-router-dom'
+import { set } from 'mongoose'
 
 const Profile = () => {
     const fileRef = useRef(null)
@@ -134,6 +135,22 @@ const Profile = () => {
         }
     }
 
+    const handleDeleteListing = async (listingId) => {
+        try {
+            const res = await fetch(`/api/listing/delete/${listingId}`, {
+                method: 'DELETE',
+            })
+            const data = await res.json()
+            if (data.success === false) {
+                console.log(data.message)
+                return
+            }
+            setUserListings(userListings.filter(listing => listing._id !== listingId))
+        } catch (error) {
+
+        }
+    }
+
     // fisebase storage
     // allow read;
     // allow write: if
@@ -217,7 +234,10 @@ const Profile = () => {
                 <div className='flex flex-col gap-4'>
                     <h1 className='text-center mt-7 text-2xl font-semibold'>Your listings</h1>
                     {userListings.map((listing) =>
-                        <div className='flex border rounded-lg p-3 justify-between items-center gap-4' key={listing._id}>
+                        <div
+                            key={listing._id}
+                            className='flex border rounded-lg p-3 justify-between items-center gap-4'
+                        >
                             <Link to={`/listing/${listing._id}`}>
                                 <img className='h-16 w-16 object-contain' src={listing.imageUrls[0]} alt="listing cover" />
                             </Link>
@@ -226,7 +246,7 @@ const Profile = () => {
                             </Link>
                             <div className='flex gap-4 items-center'>
                                 <button className='text-green-600 uppercase'>Edit</button>
-                                <button className='text-red-600 uppercase'>Delete</button>
+                                <button onClick={() => handleDeleteListing(listing._id)} className='text-red-600 uppercase'>Delete</button>
                             </div>
                         </div>
                     )}
