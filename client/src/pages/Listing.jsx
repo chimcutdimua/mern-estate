@@ -3,11 +3,12 @@ import { useParams } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination } from 'swiper/modules';
 import { FaBath, FaBed, FaChair, FaMapMarkedAlt, FaMapMarkerAlt, FaParking, FaShare } from 'react-icons/fa';
-
+import { useSelector } from 'react-redux'
 import SwiperCore from 'swiper';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
+import Contact from '../components/Contact';
 const Listing = () => {
     SwiperCore.use([Navigation, Pagination]);
     const params = useParams()
@@ -15,6 +16,8 @@ const Listing = () => {
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState(false)
     const [copied, setCopied] = useState(false)
+    const { currentUser } = useSelector(state => state.user)
+    const [contact, setContact] = useState(false)
     useEffect(() => {
         const fetchListing = async () => {
             try {
@@ -37,7 +40,6 @@ const Listing = () => {
         }
         fetchListing()
     }, [params.listingId])
-    console.log(listing)
     return (
         <div>
             {loading && <p className='text-center my-7 text-2xl'>Loading...</p>}
@@ -118,6 +120,12 @@ const Listing = () => {
                                 {listing.furnished ? 'Furnished' : 'Unfurnished'}
                             </li>
                         </ul>
+                        {currentUser && listing?.userRef !== currentUser?._id && (
+                            <button onClick={() => setContact(true)} className='bg-slate-700 uppercase hover:opacity-95 p-3 text-white rounded-lg'>
+                                Contact landlord
+                            </button>
+                        )}
+                        {contact && <Contact listing={listing} />}
                     </div>
                 </div>
 
