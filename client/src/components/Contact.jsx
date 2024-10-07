@@ -29,8 +29,6 @@ const Contact = ({
 
     }, [listing?.userRef])
 
-    console.log(landlord)
-
     return (
 
         <>
