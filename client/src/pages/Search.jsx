@@ -16,6 +16,7 @@ const Search = () => {
 
     const [loading, setLoading] = useState(false)
     const [listings, setListings] = useState([])
+    const [showMore, setShowMore] = useState(false)
 
     useEffect(() => {
         const urlParams = new URLSearchParams(location.search)
@@ -49,9 +50,15 @@ const Search = () => {
         const fetchListings = async () => {
             try {
                 setLoading(true)
+                setShowMore(false)
                 const searchQuery = urlParams.toString()
                 const res = await fetch(`/api/listing/get?${searchQuery}`)
                 const data = await res.json()
+                if (data.length > 8) {
+                    setShowMore(true)
+                } else {
+                    setShowMore(false)
+                }
                 if (data.success === false) {
                     console.log(data.message)
                     return
@@ -110,6 +117,20 @@ const Search = () => {
         urlParams.set('order', sideBarData.order)
         const searchQuery = urlParams.toString()
         navigate(`/search?${searchQuery}`)
+    }
+
+    const onShowMoreClick = async () => {
+        const numberOfListings = listings.length
+        const startIndex = numberOfListings
+        const urlParams = new URLSearchParams(location.search)
+        urlParams.set('startIndex', startIndex)
+        const searchQuery = urlParams.toString()
+        const res = await fetch(`/api/listing/get?${searchQuery}`)
+        const data = await res.json()
+        if (data.length < 9) {
+            setShowMore(false)
+        }
+        setListings([...listings, ...data])
     }
 
     return (
@@ -217,6 +238,14 @@ const Search = () => {
                             <ListingItem key={listing._id} listing={listing} />
                         ))
                     }
+                    {showMore && (
+                        <button
+                            onClick={onShowMoreClick}
+                            className='text-green-600 hover:underline p-7 text-center w-full'
+                        >
+                            Show more
+                        </button>
+                    )}
                 </div>
             </div>
         </div>
