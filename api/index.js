@@ -7,7 +7,6 @@ const listingRouter = require("./routes/listing.route");
 const { default: mongoose } = require("mongoose");
 const path = require("path");
 const app = express();
-const __dirname = path.resolve();
 
 app.use(cookieParser());
 
