@@ -58,10 +58,6 @@ const Home = () => {
                     We have a wide range of properties available for you to choose from.
                     <br />
                     Whether you are looking for a house, an apartment, or a condo, we have it all.
-                    <br />
-                    Our team of experts is here to help you find the perfect place that meets all your needs.
-                    <br />
-                    So why wait? Start your search today and find your next perfect place with ease.
                 </div>
                 <Link className='text-xs sm:text-sm text-blue-800 font-bold hover:underline' to={"/search"}>
                     Let&apos;s get started...
