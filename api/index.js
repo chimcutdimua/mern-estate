@@ -30,7 +30,7 @@ app.use("/api/user", userRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/listing", listingRouter);
 
-const clientDistPath = path.join(__dirname, "client", "dist");
+const clientDistPath = path.join(__dirname, "../client/dist");
 app.use(express.static(clientDistPath));
 
 app.get("*", (req, res) => {
