@@ -39,5 +39,6 @@ MERN Estate là một ứng dụng web quản lý bất động sản được x
 - **path**: Module để làm việc với đường dẫn tệp và thư mục.
 
 ## Cấu trúc thư mục:
-![Uploading image.png…]()
+![Screenshot 2024-10-08 145058](https://github.com/user-attachments/assets/02258840-1a2b-41d1-9c4b-cdab3679b65c)
+
 
